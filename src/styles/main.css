@@ -10,8 +10,8 @@
   --walnut: #6d320d; /* Dark Walnut */
   --mahogany: #290004; /* Rich Mahogany */
 
-  --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-body: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
   --maxw: 1120px;
@@ -79,6 +79,7 @@ body {
   font-weight: 300;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto; /* ativa o eixo opsz do Fraunces nos títulos */
   overflow-x: hidden;
   transition:
     background-color 0.45s ease,

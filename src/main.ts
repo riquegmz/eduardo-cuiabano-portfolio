@@ -1,3 +1,7 @@
+// Fontes self-hosted (variáveis: Fraunces com opsz/italic, Outfit wght).
+import '@fontsource-variable/fraunces/standard.css';
+import '@fontsource-variable/fraunces/standard-italic.css';
+import '@fontsource-variable/outfit/index.css';
 import './styles/main.css';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initSmoothScroll } from './scroll/smooth-scroll';
