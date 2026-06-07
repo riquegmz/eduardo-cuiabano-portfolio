@@ -12,6 +12,7 @@
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
   --maxw: 1120px;
   --radius: 18px;
@@ -307,10 +308,10 @@ nav {
   background: transparent;
   color: var(--fg);
   cursor: pointer;
+  /* transform fica por conta do magnetic (GSAP) — não transicionar aqui */
   transition:
     color 0.25s,
-    border-color 0.25s,
-    transform 0.25s;
+    border-color 0.25s;
 }
 .theme-toggle:hover {
   color: var(--accent);
@@ -440,7 +441,11 @@ nav {
   font-weight: 500;
   font-size: 0.98rem;
   text-decoration: none;
-  transition: 0.3s;
+  /* transform fica por conta do magnetic (GSAP) — não transicionar aqui */
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
   cursor: pointer;
 }
 .btn-primary {
@@ -575,66 +580,105 @@ section[id] {
   font-weight: 400;
   font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: -0.02em;
-  margin-bottom: 50px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: clamp(28px, 3vw, 44px);
-}
-.card {
-  background: color-mix(in srgb, var(--blush) 6%, transparent);
-  border: 1px solid color-mix(in srgb, var(--blush) 14%, transparent);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: 0.4s;
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-8px);
-  border-color: var(--chocolate);
-}
-.card .thumb {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  color: var(--blush);
-}
-.card:nth-child(1) .thumb {
-  background: linear-gradient(135deg, var(--chocolate), var(--reddish));
-}
-.card:nth-child(2) .thumb {
-  background: linear-gradient(135deg, var(--reddish), var(--walnut));
-}
-.card:nth-child(3) .thumb {
-  background: linear-gradient(135deg, var(--walnut), var(--chocolate));
-}
-.card .body {
-  padding: 30px 28px 34px;
-}
-.card h3 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-}
-.card p {
-  font-size: 0.92rem;
-  color: color-mix(in srgb, var(--blush) 70%, transparent);
-}
-.card .tag {
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--chocolate);
-  margin-bottom: 14px;
-  display: block;
+  margin-bottom: clamp(20px, 3vh, 36px);
 }
 
-/* ---------- CONTATO (alinhado à esquerda — F-pattern) ---------- */
+/* ---------- Índice editorial de projetos ---------- */
+.project-list {
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, var(--panel-fg) 18%, transparent);
+}
+.project {
+  border-bottom: 1px solid color-mix(in srgb, var(--panel-fg) 18%, transparent);
+  transition: opacity 0.4s ease;
+}
+.project-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: baseline;
+  gap: clamp(16px, 3vw, 48px);
+  padding: clamp(20px, 3.2vh, 38px) clamp(6px, 1vw, 16px);
+  text-decoration: none;
+  color: var(--panel-fg);
+}
+.project-index {
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+  color: color-mix(in srgb, var(--panel-fg) 48%, transparent);
+}
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4.6vw, 3.4rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.35s ease;
+  will-change: transform;
+}
+.project-meta {
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--panel-fg) 55%, transparent);
+  white-space: nowrap;
+}
+.project-arrow {
+  font-size: 1.3rem;
+  color: var(--chocolate);
+  opacity: 0;
+  transform: translate(-10px, 6px);
+  transition:
+    opacity 0.4s ease,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* hover: o projeto ativo destaca; os outros recuam */
+.project-list.is-hovering .project:not(.is-active) {
+  opacity: 0.3;
+}
+.project.is-active .project-title {
+  transform: translateX(clamp(10px, 1.6vw, 26px));
+  color: var(--chocolate);
+}
+.project.is-active .project-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* preview flutuante que segue o cursor (posição/escala/opacidade via JS) */
+.work-preview {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: clamp(240px, 24vw, 400px);
+  aspect-ratio: 4 / 3;
+  border-radius: 14px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 45;
+  opacity: 0;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 30px 80px -28px rgba(0, 0, 0, 0.7);
+  will-change: transform, opacity;
+}
+
+/* mobile / touch: sem preview no cursor; layout simplificado */
+@media (max-width: 760px) {
+  .project-link {
+    grid-template-columns: auto 1fr auto;
+  }
+  .project-meta {
+    display: none;
+  }
+  .work-preview {
+    display: none;
+  }
+}
+
+/* ---------- CONTATO (statement — alinhado à esquerda, F-pattern) ---------- */
 .contact h2 {
   font-family: var(--font-display);
   font-weight: 400;
@@ -648,23 +692,93 @@ section[id] {
 }
 .contact p {
   color: var(--muted);
-  margin: 24px 0 38px;
+  margin: 24px 0 0;
   max-width: 42ch;
+}
+
+/* e-mail como tipografia gigante, com underline que cresce no hover */
+.contact-email {
+  display: inline-block;
+  margin: clamp(36px, 6vh, 72px) 0 clamp(48px, 8vh, 96px);
+  text-decoration: none;
+  color: var(--fg);
+  max-width: 100%;
+}
+.contact-email-text {
+  display: inline;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.7rem, 7vw, 5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition:
+    background-size 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.35s ease;
+  word-break: break-word;
+}
+.contact-email:hover .contact-email-text {
+  color: var(--accent);
+  background-size: 100% 2px;
+}
+
+/* rodapé da seção: redes à esquerda, local/hora à direita (linha editorial) */
+.contact-foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 24px 40px;
+  padding-top: clamp(22px, 3vh, 36px);
+  border-top: 1px solid var(--border);
 }
 .social {
   display: flex;
-  gap: 26px;
-  justify-content: flex-start;
-  margin-top: 40px;
+  gap: 28px;
 }
 .social a {
-  color: var(--walnut);
+  color: var(--fg);
   text-decoration: none;
   font-weight: 500;
-  transition: 0.25s;
+  font-size: 0.95rem;
   position: relative;
+  transition: color 0.25s;
+}
+.social a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1.5px;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .social a:hover {
+  color: var(--accent);
+}
+.social a:hover::after {
+  width: 100%;
+}
+.contact-clock {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.contact-place {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+}
+.contact-time {
   color: var(--accent);
 }
 

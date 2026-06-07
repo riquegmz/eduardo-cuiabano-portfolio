@@ -8,6 +8,9 @@ import { initWordFlip } from './ui/word-flip';
 import { initDiscordCopy } from './ui/discord-copy';
 import { initTheme } from './ui/theme';
 import { initIntro } from './ui/intro';
+import { initWorkPreview } from './ui/work-preview';
+import { initMagnetic } from './ui/magnetic';
+import { initClock } from './ui/clock';
 
 // O CSS principal já foi importado/injetado acima → seguro revelar o <body>.
 // (Anti-FOUC: o HTML mantém o body invisível até esta marca.)
@@ -76,6 +79,9 @@ initIntro(reduceMotion, galaxy, {
 initTheme();
 initWordFlip(reduceMotion);
 initDiscordCopy();
+initWorkPreview(reduceMotion);
+initMagnetic(reduceMotion);
+initClock();
 
 // A foto do "Sobre" carrega depois → recalcula o gatilho da galáxia (altura
 // da página) quando ela chega.

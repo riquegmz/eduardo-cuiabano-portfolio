@@ -145,7 +145,7 @@
         </div>
 
         <div>
-          <div class="section-label">Sobre mim</div>
+          <div class="section-label">(01) — Sobre</div>
           <!-- 👉 EDITE: apresentação -->
           <h2>Olá, me chamo Eduardo.</h2>
           <p>
@@ -166,52 +166,73 @@
     <!-- ================= TRABALHOS ================= -->
     <section id="trabalhos" class="work">
       <div class="wrap">
-        <div class="section-label">Portfólio</div>
+        <div class="section-label">(02) — Portfólio</div>
         <h2>Trabalhos selecionados</h2>
-        <div class="grid">
-          <!-- 👉 EDITE: cada card é um projeto. Copie um bloco para adicionar mais. -->
-          <article class="card">
-            <div class="thumb">01</div>
-            <div class="body">
-              <span class="tag">Web Design</span>
-              <h3>Nome do Projeto</h3>
-              <p>Breve descrição do que você fez nesse projeto e qual foi o resultado.</p>
-            </div>
-          </article>
 
-          <article class="card">
-            <div class="thumb">02</div>
-            <div class="body">
-              <span class="tag">Identidade Visual</span>
-              <h3>Nome do Projeto</h3>
-              <p>Breve descrição do que você fez nesse projeto e qual foi o resultado.</p>
-            </div>
-          </article>
+        <!--
+          👉 EDITE: cada <li> é um projeto. Para plugar a mídia depois, use:
+            • imagem: data-preview="/img/work/arquivo.webp"
+            • vídeo:  data-preview="/img/work/arquivo.mp4" data-preview-type="video"
+          Sem data-preview, o preview mostra um gradiente placeholder.
+          Copie um bloco para adicionar mais projetos.
+        -->
+        <ul class="project-list">
+          <li class="project" data-preview="" data-preview-type="image">
+            <a class="project-link" href="#" aria-label="Abrir projeto">
+              <span class="project-index">01</span>
+              <span class="project-title">Nome do Projeto</span>
+              <span class="project-meta">Motion · 2025</span>
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
 
-          <article class="card">
-            <div class="thumb">03</div>
-            <div class="body">
-              <span class="tag">Modelagem 3D</span>
-              <h3>Nome do Projeto</h3>
-              <p>Breve descrição do que você fez nesse projeto e qual foi o resultado.</p>
-            </div>
-          </article>
-        </div>
+          <li class="project" data-preview="" data-preview-type="image">
+            <a class="project-link" href="#" aria-label="Abrir projeto">
+              <span class="project-index">02</span>
+              <span class="project-title">Nome do Projeto</span>
+              <span class="project-meta">Identidade Visual · 2025</span>
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+
+          <li class="project" data-preview="" data-preview-type="image">
+            <a class="project-link" href="#" aria-label="Abrir projeto">
+              <span class="project-index">03</span>
+              <span class="project-title">Nome do Projeto</span>
+              <span class="project-meta">Modelagem 3D · 2025</span>
+              <span class="project-arrow" aria-hidden="true">↗</span>
+            </a>
+          </li>
+        </ul>
       </div>
+
+      <!-- Preview flutuante que segue o cursor (ver src/ui/work-preview.ts) -->
+      <div class="work-preview" aria-hidden="true"></div>
     </section>
 
     <!-- ================= CONTATO ================= -->
     <section id="contato" class="contact wrap">
-      <div class="section-label">Vamos conversar</div>
+      <div class="section-label">(03) — Contato</div>
       <h2>Tem um projeto<br />em <em>mente?</em></h2>
-      <p>Estou sempre aberto a novos desafios. Mande uma mensagem e vamos tirar sua ideia do papel.</p>
-      <!-- 👉 EDITE: e-mail e links -->
-      <a href="mailto:seuemail@exemplo.com" class="btn btn-primary">Enviar e-mail</a>
-      <div class="social">
-        <a href="https://www.instagram.com/eduardocms" target="_blank" rel="noopener">Instagram</a>
-        <a href="mailto:seuemail@exemplo.com">Email</a>
-        <a href="#" id="discord-btn" class="discord-copy">Discord</a>
+      <p>Estou sempre aberto a novos desafios — me escreve e a gente tira a ideia do papel.</p>
+
+      <!-- 👉 EDITE: e-mail (aparece como o link gigante) -->
+      <a class="contact-email" href="mailto:seuemail@exemplo.com">
+        <span class="contact-email-text">seuemail@exemplo.com</span>
+      </a>
+
+      <div class="contact-foot">
+        <!-- 👉 EDITE: redes -->
+        <div class="social">
+          <a href="https://www.instagram.com/eduardocms" target="_blank" rel="noopener">Instagram</a>
+          <a href="#" id="discord-btn" class="discord-copy">Discord</a>
+        </div>
+        <div class="contact-clock">
+          <span class="contact-place">Rio de Janeiro, BR</span>
+          <span class="contact-time" id="local-time" aria-label="Horário local">--:--:--</span>
+        </div>
       </div>
+
       <div id="copy-toast" aria-live="polite"></div>
     </section>
 

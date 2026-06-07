@@ -20,7 +20,11 @@ Estado vivo do projeto. Manter < 200 linhas; detalhe longo vai para `docs/topics
 
 - Tentativas anteriores de "3D" com CSS-blob e Three via `<script>`/CDN **não atingiram** o nível desejado (robinpayot). O salto de qualidade exigiu bundler + Lenis + ScrollTrigger.
 - `#scene` (canvas) fica em `z-index:0`; todo conteúdo (`nav/header/section/footer`) em `z-index:1`, senão o canvas cobre o texto.
-- `RoomEnvironment` no Three atual: construtor **sem** argumento de renderer.
+- **Reveals de seção usam IntersectionObserver, NÃO ScrollTrigger por-elemento** (`motion.ts`). O ScrollTrigger por-elemento não disparava confiável com Lenis aqui (texto/cards ficavam presos escondidos). O gatilho global da galáxia (start:0/end:max) funciona normal.
+- **`prefers-reduced-motion`**: no Windows é ligado pela config "Efeitos de animação". Quando o dev tava com isso OFF, o site "não carregava" (modo reduzido escondia tudo). Por isso os reveals nunca escondem de forma que possa ficar presa, e há failsafes (body aparece sozinho em 3s; intro se remove em 7s; galáxia em try/catch).
+- **Anti-FOUC**: `<body>` invisível (CSS inline no `<head>`) até `main.ts` marcar `<html class="app-ready">` (CSS é injetado via JS em dev).
+- **Reload sempre no topo**: `history.scrollRestoration='manual'` + `scrollTo(0)` (senão a galáxia da intro cobria conteúdo no F5).
+- Eduardo é do **Rio de Janeiro** (relógio do Contato usa fuso `America/Sao_Paulo`) — não Cuiabá apesar do sobrenome.
 
 ## Iterações de design (3D do hero)
 
@@ -29,8 +33,10 @@ Jornada até o elemento certo (todos rejeitados até o último):
 
 Estado de layout/UX cravado:
 - **F-pattern**: tudo alinhado à esquerda; faixa (`--lane`) reservada à direita só pro 3D; 3D some no mobile.
-- Loader, tema claro/escuro (dark-first, anti-flash), scrollbar escondida, motion via GSAP (entradas em stagger).
-- Barra: o fundador quer nível Awwwards/"outro mundo". Não shippar nada que pareça template.
+- Galáxia: **persistente em opacidade baixa**, confinada à direita por **shader animado** (uConfine/uDim por `placement`) — não máscara CSS (que dava corte seco). Intro cinematográfica (galáxia nasce no centro → nome → voa pro hero).
+- Tema claro/escuro (dark-first, anti-flash), scrollbar escondida, reveals palavra-por-palavra com máscara + fade-up (stagger).
+- **Nível Awwwards** (pedido do fundador, via `/hm-designer`). Já feito: Trabalhos como **índice editorial** com preview no cursor (estrutura pronta pra mídia via `data-preview`); Contato **statement** (e-mail gigante + hora local do RJ ao vivo); botões **magnéticos** (GSAP); labels de seção numerados `(01)/(02)/(03)`. Cursor customizado foi testado e **removido** (fundador preferiu o padrão).
+- Barra: não shippar nada que pareça template.
 
 ## Pendências / próximos passos
 

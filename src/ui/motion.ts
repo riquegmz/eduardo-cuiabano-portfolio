@@ -151,7 +151,16 @@ function revealGroup(group: RevealGroup): void {
   }
   const fades = collectFade(group);
   if (fades.length) {
-    gsap.to(fades, { opacity: 1, y: 0, duration: 1, ease: EASE, stagger: 0.1 });
+    // clearProps no fim → remove o opacity/transform inline para o CSS (ex.: o
+    // dim de hover dos projetos) voltar a controlar o elemento.
+    gsap.to(fades, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: EASE,
+      stagger: 0.1,
+      clearProps: 'transform,opacity',
+    });
   }
 }
 
@@ -187,12 +196,12 @@ export function initScrollReveals(reduceMotion: boolean): void {
     { words: '#trabalhos h2' },
     { fade: ['#trabalhos .section-label'], distance: 36 },
   ]);
-  observeReveal('#trabalhos .grid', [{ fade: ['#trabalhos .card'], distance: 56 }]);
+  observeReveal('#trabalhos .project-list', [{ fade: ['#trabalhos .project'], distance: 40 }]);
 
   observeReveal('#contato', [
     { words: '#contato h2' },
     {
-      fade: ['#contato .section-label', '#contato p', '#contato .btn', '#contato .social'],
+      fade: ['#contato .section-label', '#contato p', '#contato .contact-email', '#contato .contact-foot'],
       distance: 44,
     },
   ]);
