@@ -17,6 +17,11 @@
   --maxw: 1120px;
   --radius: 18px;
 
+  /* Sistema de ritmo vertical — use SEMPRE estes tokens. */
+  --space-section: clamp(84px, 9vh, 124px); /* respiro entre seções */
+  --space-head: clamp(20px, 3vh, 34px); /* título → conteúdo */
+  --space-label: 18px; /* label → título */
+
   /* Faixa reservada à direita para a espiral 3D. 0 no mobile (sem 3D);
      abre em telas largas para o conteúdo nunca passar por baixo do coil. */
   --lane: 0px;
@@ -519,7 +524,7 @@ footer {
 
 /* ---------- SEÇÕES ---------- */
 section {
-  padding: clamp(84px, 9vh, 124px) 0;
+  padding: var(--space-section) 0;
 }
 section[id] {
   scroll-margin-top: 96px; /* não esconder sob a nav fixa ao ancorar */
@@ -530,7 +535,7 @@ section[id] {
   text-transform: uppercase;
   color: var(--accent);
   font-weight: 500;
-  margin-bottom: 18px;
+  margin-bottom: var(--space-label);
 }
 .about {
   display: grid;
@@ -599,7 +604,7 @@ section[id] {
   font-size: clamp(2.2rem, 4.6vw, 3.4rem);
   line-height: 1.08;
   letter-spacing: -0.025em;
-  margin-bottom: 26px;
+  margin-bottom: var(--space-head);
 }
 .about p {
   color: var(--about-text);
@@ -695,7 +700,7 @@ section[id] {
   font-weight: 400;
   font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: -0.02em;
-  margin-bottom: clamp(20px, 3vh, 36px);
+  margin-bottom: var(--space-head);
 }
 
 /* ---------- Índice editorial de projetos ---------- */
@@ -800,6 +805,7 @@ section[id] {
   font-size: clamp(2.2rem, 6vw, 4.5rem);
   letter-spacing: -0.03em;
   line-height: 1.05;
+  margin-bottom: var(--space-head);
 }
 .contact h2 em {
   font-style: italic;
@@ -807,7 +813,7 @@ section[id] {
 }
 .contact p {
   color: var(--muted);
-  margin: 24px 0 0;
+  margin: 0;
   max-width: 42ch;
 }
 
