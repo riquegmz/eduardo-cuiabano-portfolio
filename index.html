@@ -116,6 +116,13 @@
       </div>
     </nav>
 
+    <!-- Índice de seções (acende a ativa — ver src/ui/section-index.ts) -->
+    <nav class="section-index" aria-label="Índice de seções">
+      <a href="#sobre" data-target="sobre"><i></i><span>Sobre</span></a>
+      <a href="#trabalhos" data-target="trabalhos"><i></i><span>Trabalhos</span></a>
+      <a href="#contato" data-target="contato"><i></i><span>Contato</span></a>
+    </nav>
+
     <!-- ================= HERO ================= -->
     <header class="hero wrap">
       <!-- 👉 EDITE: textos da capa -->
@@ -141,7 +148,9 @@
       <div class="about">
         <!-- 🖼️ Foto em public/img/. Troque o arquivo ou o caminho abaixo. -->
         <div class="photo-frame">
-          <img src="/img/fotosite.jpg" alt="Retrato de Eduardo Cuiabano" />
+          <div class="photo-media">
+            <img src="/img/fotosite.jpg" alt="Retrato de Eduardo Cuiabano" data-parallax="0.5" />
+          </div>
         </div>
 
         <div>
@@ -153,15 +162,37 @@
             projeto em realidade com clareza e personalidade.
           </p>
           <p>Minha especialidade é trazer ideias à vida — com forma, movimento e intenção.</p>
-          <div class="tags">
-            <span>UI / UX Design</span>
-            <span>Animação e Modelagem 3D</span>
-            <span>Identidade Visual</span>
-            <span>Motion</span>
-          </div>
+          <!-- 👉 EDITE: skills (uma por linha) -->
+          <ul class="skills">
+            <li><span class="skill-num">01</span><span class="skill-name">UI / UX Design</span></li>
+            <li>
+              <span class="skill-num">02</span><span class="skill-name">Animação & Modelagem 3D</span>
+            </li>
+            <li>
+              <span class="skill-num">03</span><span class="skill-name">Identidade Visual</span>
+            </li>
+            <li><span class="skill-num">04</span><span class="skill-name">Motion Design</span></li>
+          </ul>
         </div>
       </div>
     </section>
+
+    <!-- ===== Faixa horizontal reativa ao scroll — DESATIVADA por enquanto.
+         Reativar: descomentar este bloco + a chamada initMarquee no main.ts.
+         (módulo: src/ui/marquee.ts · estilos: .marquee no CSS)
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-group"
+          >UI/UX Design<span class="sep">—</span>Motion<span class="sep">—</span>Modelagem
+          3D<span class="sep">—</span>Identidade Visual<span class="sep">—</span></span
+        >
+        <span class="marquee-group"
+          >UI/UX Design<span class="sep">—</span>Motion<span class="sep">—</span>Modelagem
+          3D<span class="sep">—</span>Identidade Visual<span class="sep">—</span></span
+        >
+      </div>
+    </div>
+    ===== -->
 
     <!-- ================= TRABALHOS ================= -->
     <section id="trabalhos" class="work">

@@ -11,6 +11,9 @@ import { initIntro } from './ui/intro';
 import { initWorkPreview } from './ui/work-preview';
 import { initMagnetic } from './ui/magnetic';
 import { initClock } from './ui/clock';
+import { initParallax } from './ui/parallax';
+import { initSectionIndex } from './ui/section-index';
+// import { initMarquee } from './ui/marquee'; // faixa horizontal desativada por enquanto
 
 // O CSS principal já foi importado/injetado acima → seguro revelar o <body>.
 // (Anti-FOUC: o HTML mantém o body invisível até esta marca.)
@@ -82,6 +85,9 @@ initDiscordCopy();
 initWorkPreview(reduceMotion);
 initMagnetic(reduceMotion);
 initClock();
+initParallax(reduceMotion);
+initSectionIndex(smooth.scrollTo);
+// initMarquee(smooth.lenis, reduceMotion); // faixa horizontal desativada por enquanto
 
 // A foto do "Sobre" carrega depois → recalcula o gatilho da galáxia (altura
 // da página) quando ela chega.

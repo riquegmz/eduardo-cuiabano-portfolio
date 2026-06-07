@@ -331,6 +331,57 @@ nav {
   display: none;
 }
 
+/* ---------- ÍNDICE DE SEÇÃO (lateral direita) ---------- */
+.section-index {
+  position: fixed;
+  right: clamp(18px, 2.6vw, 40px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+}
+.section-index a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  transition:
+    opacity 0.3s ease,
+    color 0.3s ease;
+}
+.section-index a i {
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.section-index a:hover {
+  opacity: 1;
+}
+.section-index a.is-active {
+  opacity: 1;
+  color: var(--accent);
+}
+.section-index a.is-active i {
+  width: 36px;
+}
+/* sem calha à direita → esconde */
+@media (max-width: 1100px) {
+  .section-index {
+    display: none;
+  }
+}
+
 /* ---------- HERO ---------- */
 .hero {
   min-height: 100vh;
@@ -500,15 +551,24 @@ section[id] {
   cursor: pointer;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.photo-frame img {
-  width: 100%;
+/* máscara: a imagem é maior que o quadro e desliza dentro (parallax) */
+.photo-media {
+  position: relative;
   aspect-ratio: 4 / 5; /* reserva o espaço antes de carregar → sem deslocar layout */
-  height: auto;
-  object-fit: cover;
+  overflow: hidden;
   border-radius: var(--radius);
-  display: block;
   box-shadow: 0 30px 60px -20px color-mix(in srgb, var(--mahogany) 45%, transparent);
   transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.photo-media img {
+  position: absolute;
+  top: -9%;
+  left: 0;
+  width: 100%;
+  height: 118%; /* folga p/ o parallax não mostrar borda */
+  object-fit: cover;
+  display: block;
+  will-change: transform;
 }
 .photo-frame::after {
   /* moldura decorativa atrás da foto */
@@ -522,11 +582,11 @@ section[id] {
     inset 0.4s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.4s;
 }
-/* hover: sobe e aprofunda a sombra — mesma linguagem dos cards de trabalhos */
+/* hover: sobe e aprofunda a sombra — mesma linguagem dos projetos */
 .photo-frame:hover {
   transform: translateY(-8px);
 }
-.photo-frame:hover img {
+.photo-frame:hover .photo-media {
   box-shadow: 0 44px 80px -24px color-mix(in srgb, var(--mahogany) 60%, transparent);
 }
 .photo-frame:hover::after {
@@ -536,29 +596,84 @@ section[id] {
 .about h2 {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(2rem, 4vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 24px;
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 26px;
 }
 .about p {
   color: var(--about-text);
   margin-bottom: 18px;
   max-width: 52ch;
+  line-height: 1.7;
 }
-.about .tags {
+
+/* lista de skills editorial (substitui as pills) */
+.skills {
+  list-style: none;
+  margin-top: clamp(30px, 4.5vh, 50px);
+  border-top: 1px solid var(--border);
+}
+.skills li {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 26px;
+  align-items: baseline;
+  gap: 20px;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg);
+  transition:
+    padding-left 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease;
 }
-.about .tags span {
-  font-size: 0.85rem;
-  padding: 7px 16px;
-  border-radius: 50px;
-  background: color-mix(in srgb, var(--reddish) 12%, transparent);
-  color: var(--reddish);
-  font-weight: 500;
+.skills li:hover {
+  padding-left: 14px;
+  color: var(--accent);
+}
+.skill-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+.skills li:hover .skill-num {
+  color: var(--accent);
+}
+.skill-name {
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- MARQUEE (faixa horizontal reativa ao scroll) ---------- */
+.marquee {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  padding: clamp(22px, 5vh, 52px) 0;
+  white-space: nowrap;
+  user-select: none;
+}
+.marquee-track {
+  display: inline-flex;
+  will-change: transform;
+}
+.marquee-group {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 2.6vw, 2.1rem);
+  letter-spacing: 0.01em;
+  line-height: 1;
+  color: color-mix(in srgb, var(--fg) 80%, transparent);
+}
+.marquee-group .sep {
+  color: var(--accent);
+  margin: 0 0.7em;
+  font-style: normal;
 }
 
 /* ---------- TRABALHOS ---------- */

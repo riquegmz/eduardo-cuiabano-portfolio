@@ -187,7 +187,12 @@ export function initScrollReveals(reduceMotion: boolean): void {
   observeReveal('#sobre', [
     { words: '#sobre h2' },
     {
-      fade: ['#sobre .photo-frame', '#sobre .section-label', '#sobre .about p', '#sobre .tags'],
+      fade: [
+        '#sobre .photo-frame',
+        '#sobre .section-label',
+        '#sobre .about p',
+        '#sobre .skills li',
+      ],
       distance: 44,
     },
   ]);

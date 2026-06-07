@@ -35,7 +35,8 @@ Estado de layout/UX cravado:
 - **F-pattern**: tudo alinhado à esquerda; faixa (`--lane`) reservada à direita só pro 3D; 3D some no mobile.
 - Galáxia: **persistente em opacidade baixa**, confinada à direita por **shader animado** (uConfine/uDim por `placement`) — não máscara CSS (que dava corte seco). Intro cinematográfica (galáxia nasce no centro → nome → voa pro hero).
 - Tema claro/escuro (dark-first, anti-flash), scrollbar escondida, reveals palavra-por-palavra com máscara + fade-up (stagger).
-- **Nível Awwwards** (pedido do fundador, via `/hm-designer`). Já feito: Trabalhos como **índice editorial** com preview no cursor (estrutura pronta pra mídia via `data-preview`); Contato **statement** (e-mail gigante + hora local do RJ ao vivo); botões **magnéticos** (GSAP); labels de seção numerados `(01)/(02)/(03)`. Cursor customizado foi testado e **removido** (fundador preferiu o padrão).
+- **Nível Awwwards** (pedido do fundador, via `/hm-designer`). Já feito: Trabalhos como **índice editorial** com preview no cursor (estrutura pronta pra mídia via `data-preview`); Contato **statement** (e-mail gigante + hora local do RJ ao vivo); botões **magnéticos** (GSAP); labels de seção numerados `(01)/(02)/(03)`; **Sobre** com lista de skills editorial (matou as pills de SaaS); **parallax** na foto (imagem na máscara, `data-parallax`); **índice de seção** fixo na lateral direita (acende a ativa via IO). Cursor customizado foi testado e **removido** (fundador preferiu o padrão).
+- **Marquee** (faixa horizontal reativa ao scroll) criada mas **desativada** por enquanto — comentada no HTML e no `main.ts` (módulo `marquee.ts` + estilos `.marquee` dormentes; reativar = descomentar os dois pontos).
 - Barra: não shippar nada que pareça template.
 
 ## Pendências / próximos passos
