@@ -1,0 +1,30 @@
+{
+  "name": "eduardo-cuiabano-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Portfólio de Eduardo Cuiabano — site com espiral 3D dirigida por scroll.",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{ts,css,html,json,md}\""
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "lenis": "^1.1.20",
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/three": "^0.171.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.0",
+    "vite": "^6.0.5"
+  }
+}
