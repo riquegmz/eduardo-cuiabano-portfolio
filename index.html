@@ -107,8 +107,18 @@
             <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
           </svg>
         </button>
+        <button id="nav-burger" class="nav-burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
+          <span></span><span></span>
+        </button>
       </div>
     </nav>
+
+    <!-- Menu mobile (overlay) — links tratados em src/ui/nav-menu.ts -->
+    <div id="nav-menu" class="nav-menu" aria-hidden="true">
+      <a href="#sobre"><span>01</span>Sobre</a>
+      <a href="#trabalhos"><span>02</span>Trabalhos</a>
+      <a href="#contato"><span>03</span>Contato</a>
+    </div>
 
     <!-- Índice de seções (acende a ativa — ver src/ui/section-index.ts) -->
     <nav class="section-index" aria-label="Índice de seções">

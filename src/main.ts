@@ -17,6 +17,7 @@ import { initMagnetic } from './ui/magnetic';
 import { initClock } from './ui/clock';
 import { initParallax } from './ui/parallax';
 import { initSectionIndex } from './ui/section-index';
+import { initNavMenu } from './ui/nav-menu';
 // import { initMarquee } from './ui/marquee'; // faixa horizontal desativada por enquanto
 
 // O CSS principal já foi importado/injetado acima → seguro revelar o <body>.
@@ -47,8 +48,10 @@ document.querySelectorAll<HTMLAnchorElement>('a[data-scroll-to]').forEach((ancho
 });
 
 // 2) Galáxia 3D — isolada: se o WebGL falhar nesta máquina/GPU, o site
-//    segue normalmente sem o 3D (em vez de travar tudo).
-const mount = document.getElementById('scene');
+//    segue normalmente sem o 3D (em vez de travar tudo). No mobile (≤1023px)
+//    o #scene fica display:none, então nem criamos a galáxia (economiza bateria).
+const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+const mount = isDesktop ? document.getElementById('scene') : null;
 let galaxy: Scene3D | null = null;
 if (mount) {
   try {
@@ -91,6 +94,7 @@ initMagnetic(reduceMotion);
 initClock();
 initParallax(reduceMotion);
 initSectionIndex(smooth.scrollTo);
+initNavMenu(smooth);
 // initMarquee(smooth.lenis, reduceMotion); // faixa horizontal desativada por enquanto
 
 // A foto do "Sobre" carrega depois → recalcula o gatilho da galáxia (altura

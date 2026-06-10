@@ -37,6 +37,7 @@ Estado de layout/UX cravado:
 - Tema claro/escuro (dark-first, anti-flash), scrollbar escondida, reveals palavra-por-palavra com máscara + fade-up (stagger).
 - **Nível Awwwards** (pedido do fundador, via `/hm-designer`). Já feito: Trabalhos como **índice editorial** com preview no cursor (estrutura pronta pra mídia via `data-preview`); Contato **statement** (e-mail gigante + hora local do RJ ao vivo); botões **magnéticos** (GSAP); labels de seção numerados `(01)/(02)/(03)`; **Sobre** com lista de skills editorial (matou as pills de SaaS); **parallax** na foto (imagem na máscara, `data-parallax`); **índice de seção** fixo na lateral direita (acende a ativa via IO). Cursor customizado foi testado e **removido** (fundador preferiu o padrão).
 - **Marquee** (faixa horizontal reativa ao scroll) criada mas **desativada** por enquanto — comentada no HTML e no `main.ts` (módulo `marquee.ts` + estilos `.marquee` dormentes; reativar = descomentar os dois pontos).
+- **Mobile** (`@media max-width:600px` + menu): hero com `min-height:auto`+`padding-block` (NUNCA `padding` shorthand — zera o lateral do `.wrap`); slab de Trabalhos flutua com margem; **menu hambúrguer** (`nav-menu.ts`) ≤680px. A **galáxia NÃO é criada no mobile** (`isDesktop` no main.ts) — `#scene` já era `display:none` ≤1023px. Fontes self-hosted via `@fontsource-variable` (família `Fraunces Variable`/`Outfit Variable`).
 - Barra: não shippar nada que pareça template.
 
 ## Pendências / próximos passos
