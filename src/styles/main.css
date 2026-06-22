@@ -863,6 +863,19 @@ section[id] {
   box-shadow: 0 30px 80px -28px rgba(0, 0, 0, 0.7);
   will-change: transform, opacity;
 }
+/* camada de vídeo sobre o fundo (imagem/poster); some por opacidade */
+.work-preview__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.work-preview__video.is-shown {
+  opacity: 1;
+}
 
 /* mobile / touch: sem preview no cursor; layout simplificado */
 @media (max-width: 760px) {

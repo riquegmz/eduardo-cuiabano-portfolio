@@ -1,5 +1,5 @@
 // Gradientes placeholder (paleta quente) usados enquanto não há mídia real.
-// Quando o projeto tiver data-preview="/img/...", a imagem é usada no lugar.
+// Quando o projeto tiver data-preview="/img/...", a imagem/vídeo é usada no lugar.
 const PLACEHOLDERS = [
   'linear-gradient(135deg, #c35709, #a33f29)',
   'linear-gradient(135deg, #a33f29, #6d320d)',
@@ -12,8 +12,14 @@ const FALLBACK = PLACEHOLDERS[0];
  * ao passar por um projeto, destaca-o, recua os outros e mostra uma prévia
  * flutuante que persegue o mouse. Posição/escala/opacidade interpoladas no rAF.
  *
- * Estrutura pronta para a mídia real: cada `.project` aceita
- *   data-preview="/img/work/arquivo.webp"   (imagem; vazio = gradiente)
+ * Cada `.project` aceita:
+ *   data-preview="/img/work/arquivo.webp"          → imagem  (data-preview-type="image" ou omitido)
+ *   data-preview="/img/work/arquivo.mp4"           → vídeo   (data-preview-type="video")
+ *   data-preview-poster="/img/work/arquivo.webp"   → frame estático do vídeo
+ *                                                     (usado com prefers-reduced-motion / enquanto carrega)
+ *
+ * Sem data-preview → gradiente placeholder. O vídeo só baixa quando entra em hover
+ * e pausa ao sair (performance é restrição de design, não otimização posterior).
  */
 export function initWorkPreview(reduceMotion: boolean): void {
   // Sem cursor (touch) não há hover → não inicia.
@@ -25,6 +31,53 @@ export function initWorkPreview(reduceMotion: boolean): void {
 
   const projects = Array.from(list.querySelectorAll<HTMLElement>('.project'));
   if (projects.length === 0) return;
+
+  // Camada de vídeo dentro do preview (sobreposta à imagem/gradiente de fundo).
+  const video = document.createElement('video');
+  video.className = 'work-preview__video';
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = 'none';
+  video.setAttribute('aria-hidden', 'true');
+  preview.appendChild(video);
+
+  let loadedSrc = '';
+
+  /** Define a mídia exibida no preview conforme o projeto em hover. */
+  const setMedia = (project: HTMLElement, i: number): void => {
+    const src = project.dataset.preview;
+    const type = project.dataset.previewType;
+    const poster = project.dataset.previewPoster;
+
+    if (src && type === 'video') {
+      // Vídeo: fundo recebe o poster (frame estático) como base; o <video> entra por cima.
+      preview.style.backgroundImage = poster ? `url("${poster}")` : (FALLBACK ?? '');
+      if (loadedSrc !== src) {
+        video.src = src;
+        loadedSrc = src;
+      }
+      if (reduceMotion) {
+        // Movimento reduzido: nada de autoplay. Mostra só o poster (ou 1º frame).
+        video.classList.remove('is-shown');
+        video.pause();
+      } else {
+        video.classList.add('is-shown');
+        video.currentTime = 0;
+        void video.play().catch(() => {
+          /* play pode ser bloqueado; o poster cobre o caso */
+        });
+      }
+      return;
+    }
+
+    // Imagem ou placeholder: garante o vídeo escondido/pausado.
+    video.classList.remove('is-shown');
+    video.pause();
+    preview.style.backgroundImage = src
+      ? `url("${src}")`
+      : (PLACEHOLDERS[i % PLACEHOLDERS.length] ?? FALLBACK ?? '');
+  };
 
   let targetX = 0;
   let targetY = 0;
@@ -46,6 +99,7 @@ export function initWorkPreview(reduceMotion: boolean): void {
     preview.style.opacity = String(vis);
     if (vis < 0.001 && targetVis === 0) {
       rafId = 0;
+      video.pause(); // libera o decode quando o preview some
       return;
     }
     rafId = requestAnimationFrame(render);
@@ -64,10 +118,7 @@ export function initWorkPreview(reduceMotion: boolean): void {
       list.classList.add('is-hovering');
       for (const p of projects) p.classList.toggle('is-active', p === project);
 
-      const src = project.dataset.preview;
-      preview.style.backgroundImage = src
-        ? `url("${src}")`
-        : (PLACEHOLDERS[i % PLACEHOLDERS.length] ?? FALLBACK ?? '');
+      setMedia(project, i);
 
       // primeira aparição: posiciona no cursor sem "voar" da origem
       if (vis < 0.01) {

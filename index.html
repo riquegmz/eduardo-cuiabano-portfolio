@@ -195,14 +195,25 @@
         <h2>Trabalhos selecionados</h2>
 
         <!--
-          👉 EDITE: cada <li> é um projeto. Para plugar a mídia depois, use:
-            • imagem: data-preview="/img/work/arquivo.webp"
-            • vídeo:  data-preview="/img/work/arquivo.mp4" data-preview-type="video"
-          Sem data-preview, o preview mostra um gradiente placeholder.
-          Copie um bloco para adicionar mais projetos.
+          👉 EDITE: cada <li> é um projeto. O preview que segue o cursor já funciona.
+          Hoje os data-preview estão vazios → aparece um gradiente placeholder.
+          Para plugar a mídia real, coloque o arquivo em public/img/work/ e preencha:
+
+            • IMAGEM (.webp/.jpg):
+                data-preview="/img/work/arquivo.webp"
+
+            • VÍDEO (.mp4/.webm — loop mudo, ideal p/ motion e 3D):
+                data-preview="/img/work/arquivo.mp4"
+                data-preview-type="video"
+                data-preview-poster="/img/work/arquivo.webp"   ← frame estático
+                  (usado enquanto o vídeo carrega e quando o usuário pede menos movimento)
+
+          O href="#" é placeholder — troque pelo link do projeto (case, vídeo, Behance…).
+          Copie um <li> inteiro para adicionar mais projetos e renumere o project-index.
         -->
         <ul class="project-list">
-          <li class="project" data-preview="" data-preview-type="image">
+          <!-- Exemplo VÍDEO (preencha data-preview / poster quando tiver o arquivo) -->
+          <li class="project" data-preview="" data-preview-type="video" data-preview-poster="">
             <a class="project-link" href="#" aria-label="Abrir projeto">
               <span class="project-index">01</span>
               <span class="project-title">Nome do Projeto</span>
@@ -211,6 +222,7 @@
             </a>
           </li>
 
+          <!-- Exemplo IMAGEM -->
           <li class="project" data-preview="" data-preview-type="image">
             <a class="project-link" href="#" aria-label="Abrir projeto">
               <span class="project-index">02</span>
@@ -220,7 +232,8 @@
             </a>
           </li>
 
-          <li class="project" data-preview="" data-preview-type="image">
+          <!-- Exemplo VÍDEO -->
+          <li class="project" data-preview="" data-preview-type="video" data-preview-poster="">
             <a class="project-link" href="#" aria-label="Abrir projeto">
               <span class="project-index">03</span>
               <span class="project-title">Teste de Modelagem e Rigging no Blender</span>
