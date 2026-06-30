@@ -22,15 +22,18 @@ const FALLBACK = PLACEHOLDERS[0];
  * e pausa ao sair (performance é restrição de design, não otimização posterior).
  */
 export function initWorkPreview(reduceMotion: boolean): void {
-  // Sem cursor (touch) não há hover → não inicia.
-  if (!window.matchMedia('(hover: hover)').matches) return;
-
-  const preview = document.querySelector<HTMLElement>('.work-preview');
   const list = document.querySelector<HTMLElement>('.project-list');
-  if (!preview || !list) return;
+  if (!list) return;
 
   const projects = Array.from(list.querySelectorAll<HTMLElement>('.project'));
   if (projects.length === 0) return;
+
+  // O preview que segue o cursor só faz sentido com mouse (em touch não há hover).
+  // O clique nos projetos é tratado pelo lightbox (ver src/ui/lightbox.ts).
+  if (!window.matchMedia('(hover: hover)').matches) return;
+
+  const preview = document.querySelector<HTMLElement>('.work-preview');
+  if (!preview) return;
 
   // Camada de vídeo dentro do preview (sobreposta à imagem/gradiente de fundo).
   const video = document.createElement('video');
